@@ -1,0 +1,13 @@
+# Ansible backup av Cisco-konfigurasjoner
+ansible/backups/
+
+# Python
+__pycache__/
+*.pyc
+
+# Ansible
+*.retry
+
+# Miljø-/hemmelige filer
+.env
+vault_password*

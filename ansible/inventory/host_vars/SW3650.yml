@@ -1,0 +1,24 @@
+---
+vlans_to_create:
+  - id: 106
+    name: MANAGEMENT
+
+access_ports:
+  - interface: GigabitEthernet1/0/1
+    vlan: 106
+    description: MGMT-PC
+
+  - interface: GigabitEthernet1/0/2
+    vlan: 106
+    description: R4221-MGMT
+
+  - interface: GigabitEthernet1/0/3
+    vlan: 106
+    description: R2901-MGMT
+
+trunk_ports: []
+
+precheck_commands:
+  - show interfaces GigabitEthernet1/0/1 status
+  - show interfaces GigabitEthernet1/0/2 status
+  - show interfaces GigabitEthernet1/0/3 status

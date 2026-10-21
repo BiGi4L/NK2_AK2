@@ -1,0 +1,24 @@
+---
+- name: Konfigurer DHCP på routerne
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+
+    - name: Reserver adresser som ikke skal deles ut
+      cisco.ios.ios_config:
+        lines:
+          - "{{ item }}"
+        save_when: modified
+      loop: "{{ dhcp_excluded }}"
+
+    - name: Opprett DHCP-pooler
+      cisco.ios.ios_config:
+        parents:
+          - "ip dhcp pool {{ item.name }}"
+        lines:
+          - "network {{ item.network }} {{ item.mask }}"
+          - "default-router {{ item.gateway }}"
+          - lease 7
+        save_when: modified
+      loop: "{{ dhcp_pools }}"

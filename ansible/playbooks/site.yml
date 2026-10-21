@@ -1,0 +1,10 @@
+---
+- import_playbook: 01_test_connection.yml
+- import_playbook: 02_precheck.yml
+- import_playbook: 03_backup.yml
+- import_playbook: 04_vlans.yml
+- import_playbook: 05_router_config.yml
+- import_playbook: 06_switch_ports.yml
+- import_playbook: 07_etherchannel.yml
+- import_playbook: 08_dhcp.yml
+- import_playbook: 09_verify.yml

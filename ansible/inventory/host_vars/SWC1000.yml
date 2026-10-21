@@ -1,0 +1,40 @@
+---
+vlans_to_create:
+  - id: 10
+    name: VLAN10
+
+  - id: 20
+    name: VLAN20
+
+  - id: 106
+    name: MANAGEMENT
+
+access_ports:
+  - interface: GigabitEthernet1/0/2
+    vlan: 10
+    description: CLIENT-VLAN10
+
+  - interface: GigabitEthernet1/0/3
+    vlan: 20
+    description: CLIENT-VLAN20
+
+trunk_ports:
+  - interface: GigabitEthernet1/0/1
+    allowed_vlans: "10,20,106"
+    native_vlan: 106
+    description: TRUNK-SW2960
+
+etherchannel:
+  channel_id: 1
+  allowed_vlans: "10,20,106"
+  native_vlan: 106
+  members:
+    - GigabitEthernet1/0/4
+    - GigabitEthernet1/0/5
+
+precheck_commands:
+  - show interfaces GigabitEthernet1/0/1 status
+  - show interfaces GigabitEthernet1/0/2 status
+  - show interfaces GigabitEthernet1/0/3 status
+  - show interfaces GigabitEthernet1/0/4 status
+  - show interfaces GigabitEthernet1/0/5 status

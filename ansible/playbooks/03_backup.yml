@@ -1,0 +1,12 @@
+---
+- name: Backup av alle Cisco-enheter
+  hosts: cisco_ios
+  gather_facts: false
+
+  tasks:
+
+    - name: Ta backup av running-config
+      cisco.ios.ios_config:
+        backup: true
+        backup_options:
+          dir_path: "{{ playbook_dir }}/../backups"

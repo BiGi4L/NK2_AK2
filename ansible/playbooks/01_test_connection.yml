@@ -1,0 +1,19 @@
+---
+- name: Test SSH mot alle Cisco-enheter
+  hosts: cisco_ios
+  gather_facts: false
+
+  tasks:
+
+    - name: Hent informasjon fra enheten
+      cisco.ios.ios_command:
+        commands:
+          - show version
+          - show ip interface brief
+      register: output
+
+    - name: Vis at enheten svarte
+      ansible.builtin.debug:
+        msg:
+          - "{{ inventory_hostname }} svarte på Ansible."
+          - "{{ output.stdout_lines[1] }}"

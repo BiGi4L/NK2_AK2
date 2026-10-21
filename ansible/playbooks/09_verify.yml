@@ -1,0 +1,39 @@
+---
+- name: Verifiser switch-konfigurasjon
+  hosts: switches
+  gather_facts: false
+
+  tasks:
+
+    - name: Hent switch-status
+      cisco.ios.ios_command:
+        commands:
+          - show vlan brief
+          - show interfaces trunk
+          - show etherchannel summary
+          - show ip interface brief
+      register: switch_verify
+
+    - name: Vis switch-resultat
+      ansible.builtin.debug:
+        var: switch_verify.stdout_lines
+
+
+- name: Verifiser router-konfigurasjon
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+
+    - name: Hent router-status
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief
+          - show ip route
+          - show ip dhcp pool
+          - show ip dhcp binding
+      register: router_verify
+
+    - name: Vis router-resultat
+      ansible.builtin.debug:
+        var: router_verify.stdout_lines

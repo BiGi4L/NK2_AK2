@@ -1,0 +1,33 @@
+---
+vlans_to_create:
+  - id: 10
+    name: VLAN10
+
+  - id: 20
+    name: VLAN20
+
+  - id: 106
+    name: MANAGEMENT
+
+access_ports: []
+
+trunk_ports:
+  - interface: FastEthernet0/1
+    allowed_vlans: "10,106"
+    native_vlan: 106
+    description: TRUNK-R4221
+
+  - interface: FastEthernet0/2
+    allowed_vlans: "20,106"
+    native_vlan: 106
+    description: TRUNK-R2901
+
+  - interface: FastEthernet0/3
+    allowed_vlans: "10,20,106"
+    native_vlan: 106
+    description: TRUNK-C1000
+
+precheck_commands:
+  - show interfaces FastEthernet0/1 status
+  - show interfaces FastEthernet0/2 status
+  - show interfaces FastEthernet0/3 status

@@ -1,0 +1,33 @@
+---
+- name: Konfigurer access- og trunkporter
+  hosts: switches
+  gather_facts: false
+
+  tasks:
+
+    - name: Konfigurer access-porter
+      cisco.ios.ios_config:
+        parents:
+          - "interface {{ item.interface }}"
+        lines:
+          - "description {{ item.description }}"
+          - "switchport mode access"
+          - "switchport access vlan {{ item.vlan }}"
+          - "no shutdown"
+        save_when: modified
+      loop: "{{ access_ports | default([]) }}"
+
+    - name: Konfigurer trunkporter
+      cisco.ios.ios_config:
+        parents:
+          - "interface {{ item.interface }}"
+        lines:
+          # Native VLAN settes FØR trunk aktiveres.
+          # Dette gjør at management VLAN 106 ikke faller ut.
+          - "description {{ item.description }}"
+          - "switchport trunk native vlan {{ item.native_vlan }}"
+          - "switchport trunk allowed vlan {{ item.allowed_vlans }}"
+          - "switchport mode trunk"
+          - "no shutdown"
+        save_when: modified
+      loop: "{{ trunk_ports | default([]) }}"

@@ -1,0 +1,30 @@
+---
+- name: Konfigurer EtherChannel på Catalyst 1000
+  hosts: SWC1000
+  gather_facts: false
+
+  tasks:
+
+    - name: Konfigurer EtherChannel-medlemmer
+      cisco.ios.ios_config:
+        parents:
+          - "interface {{ item }}"
+        lines:
+          - "switchport trunk native vlan {{ etherchannel.native_vlan }}"
+          - "switchport trunk allowed vlan {{ etherchannel.allowed_vlans }}"
+          - "switchport mode trunk"
+          - "channel-group {{ etherchannel.channel_id }} mode active"
+          - "no shutdown"
+        save_when: modified
+      loop: "{{ etherchannel.members }}"
+
+    - name: Konfigurer Port-channel
+      cisco.ios.ios_config:
+        parents:
+          - "interface Port-channel{{ etherchannel.channel_id }}"
+        lines:
+          - "switchport trunk native vlan {{ etherchannel.native_vlan }}"
+          - "switchport trunk allowed vlan {{ etherchannel.allowed_vlans }}"
+          - "switchport mode trunk"
+          - "no shutdown"
+        save_when: modified

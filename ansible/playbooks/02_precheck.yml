@@ -1,0 +1,16 @@
+---
+- name: Kontroller porter og interfaces før konfigurasjon
+  hosts: cisco_ios
+  gather_facts: false
+  any_errors_fatal: true
+
+  tasks:
+
+    - name: Kontroller at forventede interfaces finnes
+      cisco.ios.ios_command:
+        commands: "{{ precheck_commands }}"
+      register: precheck_output
+
+    - name: Precheck OK
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} bestod precheck."

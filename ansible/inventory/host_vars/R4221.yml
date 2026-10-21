@@ -1,0 +1,26 @@
+---
+parent_interface: GigabitEthernet0/0/0
+
+router_subinterfaces:
+  - interface: GigabitEthernet0/0/0.10
+    vlan: 10
+    ip: 192.168.10.1
+    mask: 255.255.255.0
+
+static_routes:
+  - network: 192.168.20.0
+    mask: 255.255.255.0
+    next_hop: 192.168.106.2
+
+dhcp_excluded:
+  - "ip dhcp excluded-address 192.168.10.1 192.168.10.20"
+
+dhcp_pools:
+  - name: VLAN10
+    network: 192.168.10.0
+    mask: 255.255.255.0
+    gateway: 192.168.10.1
+
+precheck_commands:
+  - show interfaces GigabitEthernet0/0/0
+  - show interfaces GigabitEthernet0/0/1

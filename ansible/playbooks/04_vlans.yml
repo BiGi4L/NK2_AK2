@@ -1,0 +1,15 @@
+---
+- name: Konfigurer VLAN på switchene
+  hosts: switches
+  gather_facts: false
+
+  tasks:
+
+    - name: Opprett VLAN
+      cisco.ios.ios_config:
+        parents:
+          - "vlan {{ item.id }}"
+        lines:
+          - "name {{ item.name }}"
+        save_when: modified
+      loop: "{{ vlans_to_create }}"

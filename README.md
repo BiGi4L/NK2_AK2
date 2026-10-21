@@ -24,25 +24,30 @@ Utstyret som er brukt:
 Oppsettet i labben er koblet slik:
 
 ```text
-PC
- |
- | Gi1/0/1
- |
-3650
- |             |
- | Gi1/0/2     | Gi1/0/3
- |             |
-4221          2901
- |             |
- | Gi0/0/0     | Gi0/0
- |             |
-Fa0/1         Fa0/2
-      \       /
-        2960
-          |
-        Fa0/3
-          |
-     Catalyst 1000
+                         PC
+                          |
+                       Gi1/0/1
+                          |
+                   Catalyst 3650
+                    /           \
+             Gi1/0/2             Gi1/0/3
+                |                   |
+             Gi0/0/1              Gi0/1
+                |                   |
+             ISR 4221            ISR 2901
+                |                   |
+             Gi0/0/0              Gi0/0
+                |                   |
+              Fa0/1               Fa0/2
+                 \                 /
+                  \               /
+                   Catalyst 2960
+                        |
+                      Fa0/3
+                        |
+                 Catalyst 1000
+                        |
+                   EtherChannel
 ```
 
 Catalyst 1000 brukes også videre mot klienter og EtherChannel.
